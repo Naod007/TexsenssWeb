@@ -1,7 +1,23 @@
-/* ============================================================
+44444444444444/* ============================================================
    TEXSENSS — main.js
    ============================================================ */
-
+(function () {
+    var cards = document.querySelectorAll('.wt-why [data-wt-card]');
+    if (!('IntersectionObserver' in window) || !cards.length) {
+      cards.forEach(function (c) { c.style.opacity = 1; c.style.transform = 'none'; });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('wt-in-view'); }, 60);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(function (c) { observer.observe(c); });
+  })();
 (function () {
   'use strict';
 
